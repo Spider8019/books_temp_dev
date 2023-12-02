@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000
 const pool = mysql.createPool({
   host: 'bxvdqypaoapk8gq6b7vt-mysql.services.clever-cloud.com',
   user: 'utwqxdx7kw0luqml',
-  password: 'utwqxdx7kw0luqml',
+  password: 'IRlFnyz2wjQbHsclRetn',
   database: 'bxvdqypaoapk8gq6b7vt',
   waitForConnections: true,
   connectionLimit: 10,
@@ -19,7 +19,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', async (req, res) => {
-  console.log(req.query)
   pool.getConnection((err, connection) => {
     if (err) {
       console.error('Error connecting to MySQL database: ', err)
@@ -27,7 +26,7 @@ app.get('/', async (req, res) => {
       return
     }
 
-    connection.query(`SELECT * FROM BOOK`, (err, results) => {
+    connection.query(`SELECT * FROM books`, (err, results) => {
       if (err) {
         console.error('Error executing query: ', err)
         return
