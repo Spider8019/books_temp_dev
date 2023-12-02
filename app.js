@@ -3,11 +3,15 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
+const PORT = process.env.PORT || 5000
 const pool = mysql.createPool({
   host: 'bxvdqypaoapk8gq6b7vt-mysql.services.clever-cloud.com',
   user: 'utwqxdx7kw0luqml',
   password: 'utwqxdx7kw0luqml',
   database: 'bxvdqypaoapk8gq6b7vt',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 })
 
 app.use(cors())
@@ -40,4 +44,4 @@ app.get('/getAllBooks', async (req, res) => {
   })
 })
 
-app.listen(8000, () => [console.log('server started running')])
+app.listen(PORT, () => [console.log('server started running')])
