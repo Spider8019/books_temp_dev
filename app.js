@@ -18,7 +18,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/getAllBooks', async (req, res) => {
+app.get('/', async (req, res) => {
   console.log(req.query)
   pool.getConnection((err, connection) => {
     if (err) {
