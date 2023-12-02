@@ -26,7 +26,7 @@ app.get('/', async (req, res) => {
       return
     }
 
-    connection.query(`SELECT * FROM books`, (err, results) => {
+    connection.query(`SELECT title FROM books`, (err, results) => {
       if (err) {
         console.error('Error executing query: ', err)
         return
