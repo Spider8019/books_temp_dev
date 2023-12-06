@@ -18,7 +18,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/', async (req, res) => {
+app.get('/novels/', async (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
       console.error('Error connecting to MySQL database: ', err)
@@ -26,7 +26,7 @@ app.get('/', async (req, res) => {
       return
     }
 
-    connection.query(`SELECT title FROM books`, (err, results) => {
+    connection.query(`SELECT * FROM books`, (err, results) => {
       if (err) {
         console.error('Error executing query: ', err)
         return
