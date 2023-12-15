@@ -22,7 +22,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.get('/novels/', async (req, res) => {
+app.get('/novels', async (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) {
       console.error('Error connecting to MySQL database: ', err)
@@ -30,12 +30,12 @@ app.get('/novels/', async (req, res) => {
       return
     }
 
-    connection.query(`SELECT * FROM books`, (err, results) => {
+    connection.query(`SELECT * FROM books LIMIT 10 OFFSET ${req.query.pageNumber*10-10}`, (err, results) => {
       if (err) {
         console.error('Error executing query: ', err)
         return
       }
-
+      console.log(results.length)
       res.send(results)
     })
 
