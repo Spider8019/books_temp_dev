@@ -30,14 +30,17 @@ app.get('/novels', async (req, res) => {
       return
     }
 
-    connection.query(`SELECT * FROM books LIMIT 10 OFFSET ${req.query.pageNumber*10-10}`, (err, results) => {
-      if (err) {
-        console.error('Error executing query: ', err)
-        return
-      }
-      console.log(results.length)
-      res.send(results)
-    })
+    connection.query(
+      `SELECT * FROM books LIMIT 10 OFFSET ${req.query.pageNumber * 10 - 10}`,
+      (err, results) => {
+        if (err) {
+          console.error('Error executing query: ', err)
+          return
+        }
+        console.log(results.length)
+        res.json(results)
+      },
+    )
 
     // Use the connection for executing queries
     console.log('connected')
