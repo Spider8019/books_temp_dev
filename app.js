@@ -29,16 +29,29 @@ app.get('/novels', async (req, res) => {
       // Handle the error
       return
     }
+    let queryString = ''
+    const { language, sort } = req.query
+    console.log(sort)
+    if (req.query.hasOwnProperty('language') && language !== undefined) {
+      queryString = queryString.concat(`where language = "${language}" `)
+      console.log(queryString)
+    }
+    if (req.query.hasOwnProperty('sort') && sort !== undefined) {
+      queryString = queryString.concat(`order by ${sort.split("-")[0]} ${sort.split("-")[1]} `)
+      console.log(queryString)
+    }
 
     connection.query(
-      `SELECT * FROM books LIMIT 10 OFFSET ${req.query.pageNumber * 10 - 10}`,
+      `SELECT * FROM books ${queryString} LIMIT 10 OFFSET ${
+        req.query.pageNumber * 10 - 10
+      }`,
       (err, results) => {
         if (err) {
           console.error('Error executing query: ', err)
           return
         }
         console.log(results.length)
-        res.json(results)
+        res.send(results)
       },
     )
 
@@ -144,4 +157,4 @@ app.get('/userdetail/:phonenumber', async (req, res) => {
   })
 })
 
-app.listen(PORT, () => [console.log('server started running')])
+app.listen(PORT, () => [console.log('server started running ' + PORT)])
